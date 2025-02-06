@@ -1,0 +1,58 @@
+import java.util.*;
+import java.util.stream.Collectors;
+
+class Employee {
+    String name;
+    int age;
+    double salary;
+
+    // Constructor
+    public Employee(String name, int age, double salary) {
+        this.name = name;
+        this.age = age;
+        this.salary = salary;
+    }
+
+    // Getters
+    public String getName() {
+        return name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public double getSalary() {
+        return salary;
+    }
+}
+
+public class EmployeeStreamExample {
+
+    public static void main(String[] args) {
+        // List of employees
+        List<Employee> employees = Arrays.asList(
+            new Employee("Alice", 25, 50000),
+            new Employee("Bob", 35, 60000),
+            new Employee("Charlie", 40, 70000),
+            new Employee("David", 30, 55000),
+            new Employee("Eva", 50, 75000)
+        );
+
+        // Filter employees older than 30, collect names, and calculate average salary
+        List<String> employeeNames = employees.stream()
+            .filter(emp -> emp.getAge() > 30) // Filtering employees older than 30
+            .map(Employee::getName)          // Mapping to their names
+            .collect(Collectors.toList());   // Collecting the names into a list
+
+        double averageSalary = employees.stream()
+            .filter(emp -> emp.getAge() > 30) // Filtering employees older than 30
+            .mapToDouble(Employee::getSalary) // Mapping to salary
+            .average()                       // Calculating the average salary
+            .orElse(0);                      // Default value if no employees match the condition
+
+        // Print results
+        System.out.println("Employee Names older than 30: " + employeeNames);
+        System.out.println("Average Salary of employees older than 30: " + averageSalary);
+    }
+}
