@@ -1,0 +1,33 @@
+import java.util.*;
+import java.util.function.Function;
+
+public class LambdaExample {
+
+    // Functional interface
+    interface StringProcessor {
+        String process(String str);
+    }
+
+    public static void main(String[] args) {
+        // List of strings
+        List<String> strings = Arrays.asList("apple", "banana", "cherry", "date", "elderberry");
+
+        // 1. Sorting the list in reverse alphabetical order using lambda expression
+        strings.sort((str1, str2) -> str2.compareTo(str1));
+
+        // Print sorted list
+        System.out.println("Sorted in reverse alphabetical order: " + strings);
+
+        // 2. Using StringProcessor functional interface to convert strings to uppercase
+        StringProcessor processor = (str) -> str.toUpperCase();
+
+        // Processing the list of strings
+        List<String> upperCaseStrings = new ArrayList<>();
+        for (String str : strings) {
+            upperCaseStrings.add(processor.process(str));
+        }
+
+        // Print uppercase strings
+        System.out.println("Uppercase Strings: " + upperCaseStrings);
+    }
+}
