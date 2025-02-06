@@ -1,0 +1,43 @@
+import java.util.Optional;
+
+interface UserService {
+
+    // Default method to provide a welcome message
+    default String getWelcomeMessage() {
+        return "Welcome, Guest!";
+    }
+
+    // Method to get user name wrapped in Optional
+    Optional<String> getUser(String name);
+}
+
+class UserServiceImpl implements UserService {
+
+    // Implementing getUser method
+    @Override
+    public Optional<String> getUser(String name) {
+        if (name != null && !name.isEmpty()) {
+            return Optional.of(name);
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    public static void main(String[] args) {
+        UserService userService = new UserServiceImpl();
+
+        // Test with name
+        String name = "John";
+        Optional<String> userNameOpt = userService.getUser(name);
+
+        // Print the welcome message
+        System.out.println(userNameOpt.map(n -> "Welcome, " + n + "!").orElse(userService.getWelcomeMessage()));
+
+        // Test with null name
+        String nullName = null;
+        Optional<String> nullUserNameOpt = userService.getUser(nullName);
+
+        // Print the welcome message
+        System.out.println(nullUserNameOpt.map(n -> "Welcome, " + n + "!").orElse(userService.getWelcomeMessage()));
+    }
+}
